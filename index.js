@@ -5,7 +5,7 @@ const mongoose = require("mongoose");
 const config = require("./config/config");
 const ApiError = require("./utils/ApiError");
 const cors = require("cors");
-// const { errorConverter, errorHandler } = require("./middlewares/error");
+const errorHandler = require("./middlewares/errorHandler");
 
 mongoose.connect(config.mongoose.url, config.mongoose.options);
 
@@ -25,16 +25,10 @@ app.use("/", auth);
 app.use("/allusers", users);
 
 app.all("*", (req, res, next) => {
-  const err = new ApiError(400, `Requested URL ${req.path} not found`);
-  next(err);
+  new ApiError(400, `Requested URL ${req.path} not found`);
 });
 
-app.use((err, req, res, next) => {
-  const statusCode = err.statusCode || 500;
-  res.status(statusCode).json({
-    message: err.message,
-  });
-});
+app.use(errorHandler);
 
 const port = process.env.PORT || 5000;
 
