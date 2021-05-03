@@ -1,20 +1,9 @@
 const express = require("express");
+const { userController } = require("../../controllers");
+const { verifyUserToken } = require("../../utils/jwtHelper");
+
 const router = express.Router();
 
-router.get("/", async (req, res) => {
-  res.status(200).send("Welcome");
-});
-
-router.post("/register", async (req, res) => {
-  res.status(200).send("register");
-});
-
-router.post("/login", async (req, res) => {
-  res.status(200).send("login");
-});
-
-router.get("/allusers", async (req, res) => {
-  res.status(200).send("user data");
-});
+router.get("/", verifyUserToken, userController.getUsers);
 
 module.exports = router;
