@@ -4,15 +4,26 @@ const { authService, userService } = require("../services");
 
 const register = catchAsync(async (req, res) => {
   const user = await userService.createUser(req.body);
-  const token = await signUserToken(user);
-  res.status(201).json({ user, token });
+  res.status(201).send({
+    status: "created",
+    data: user.email,
+  });
 });
 
 const login = catchAsync(async (req, res) => {
   const { email, password } = req.body;
   const user = await authService.loginUserwithEmailAndPassword(email, password);
-  const token = await signUserToken(user);
-  res.status(200).json({ user, token });
+  const data = {
+    firstName: user.firstName,
+    sureName: user.sureName,
+    email: user.email,
+  };
+  const token = await signUserToken(data);
+  res.status(200).send({
+    status: "ok",
+    data: data,
+    token: token,
+  });
 });
 
 module.exports = {

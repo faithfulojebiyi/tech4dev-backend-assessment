@@ -4,15 +4,23 @@ const auth = require("./routes/api/auth");
 const mongoose = require("mongoose");
 const config = require("./config/config");
 const ApiError = require("./utils/ApiError");
+const cors = require("cors");
 // const { errorConverter, errorHandler } = require("./middlewares/error");
 
 mongoose.connect(config.mongoose.url, config.mongoose.options);
 
 const app = express();
 
+// parse json request body
 app.use(express.json());
+
+// parse urlencoded request body
 app.use(express.urlencoded({ extended: true }));
 
+// enable cors
+app.use(cors());
+
+// set routes
 app.use("/", auth);
 app.use("/allusers", users);
 

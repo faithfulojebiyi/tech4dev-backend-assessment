@@ -11,7 +11,7 @@ const userService = require("./user.service");
 const loginUserwithEmailAndPassword = async (email, password) => {
   const user = await userService.getUserByEmail(email);
   if (!user || !(await user.isPasswordMatch(password))) {
-    throw new ApiError(401, "Incorrect email or password");
+    throw new ApiError(404, "Incorrect email or password");
   }
   return user;
 };
