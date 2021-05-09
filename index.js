@@ -1,4 +1,5 @@
 const express = require("express");
+const limiter = require("./middlewares/ratelimit");
 const users = require("./routes/api/users");
 const auth = require("./routes/api/auth");
 const mongoose = require("mongoose");
@@ -17,6 +18,7 @@ app.use(express.json());
 // parse urlencoded request body
 app.use(express.urlencoded({ extended: true }));
 
+app.use(limiter);
 // enable cors
 app.use(cors());
 
