@@ -1,11 +1,13 @@
 const { ObjectId } = require("bson");
 const mongoose = require("mongoose");
 const bcrypt = require("bcrypt");
+const verifyEmail = require("../validators/validator");
 
-function verifyEmail(email) {
-  var re = /^\w+([\.-]?\w+)*@\w+([\.-]?\w+)*(\.\w{2,3})+$/;
-  return re.test(email);
-}
+// function verifyEmail(email) {
+//   var re = /^\w+([\.-]?\w+)*@\w+([\.-]?\w+)*(\.\w{2,3})+$/;
+//   return re.test(email);
+// }
+
 const userSchema = mongoose.Schema(
   {
     firstName: {
